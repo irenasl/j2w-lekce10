@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="/css/main.css" th:href="@{/css/main.css}">
+    <title>Seznam tříd</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-primary mb-4">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/" th:href="@{/}">Seznam tříd</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+        </div>
+    </div>
+</nav>
+
+<main class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Název</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="trida : ${tridy}">
+            <td><a th:href="@{/trida (id=${trida.id})}"> <span th:text="${trida.nazev}"> </span> </a></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <div class="pager">
+        <a th:each="pageNumber : ${#numbers.sequence(0,tridy.totalPages-1)}"
+           th:href="@{${currentURL}(size=${tridy.size}, page=${pageNumber})}"
+           th:text="${pageNumber + 1}"
+           class="page"
+           th:classappend="${pageNumber==tridy.number} ? 'active'"></a>
+    </div>
+
+
+</main>
+</body>
+</html>
